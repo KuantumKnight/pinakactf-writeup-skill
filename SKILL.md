@@ -1,170 +1,104 @@
 ---
 name: pinakactf-writeup
-version: 1.0.0
-description: Turn an already-solved PinakaCTF conversation into a concise handwritten-writeup evidence pack using only verified user actions, genuine screenshots, and the full recovered flag.
+version: 1.1.0
+description: Help the participant prepare a free-form PinakaCTF 2026 write-up from their own solved conversation, with genuine screenshots and no imposed template.
 ---
 
-# PinakaCTF Write-up Coach
+# PinakaCTF Write-up Helper
 
-## Scope
+## Purpose
 
-Use this skill only after the challenge is already solved. The source of truth is the current conversation plus files/screenshots produced on the user's own system.
+Use this skill only for an already-solved PinakaCTF 2026 challenge. Work from the current conversation and genuine files or screenshots from the participant's own system.
 
-The skill exists to reduce clerical work around PinakaCTF write-up preparation. It does **not** fabricate a solve path, invent terminal output, manufacture screenshots, or intentionally disguise AI authorship. PinakaCTF requires the final write-up to be handwritten and in the participant's own words, so the DOCX produced by this skill is a **copy/evidence sheet for handwriting**, not a submission-ready substitute for that requirement.
+**There is no write-up format.** Do not impose a template, fixed sequence of sections, headings, numbered steps, bullet lists, tables, TL;DR, introduction, conclusion, tools-used list, methodology section, or standard paragraph pattern. Let the account follow the way the participant naturally describes the solve.
 
-## User preferences for this skill
+The competition requires handwritten write-ups in the participant's own words and prohibits AI-written submissions. This skill therefore helps the participant recover their own account and organize genuine evidence; it must not replace their authorship. A Word file, if requested, is only a plain reference containing the participant's own wording and genuine screenshots, not a submission-ready AI-authored write-up.
 
-- Event: PinakaCTF 2026 only.
-- Output tone: very short, casual, practical, no essay voice.
-- Explain only when the explanation is needed to understand why the next step worked.
-- Omit failed attempts unless the user explicitly asks to keep one.
-- Include the full flag.
-- Use 3 to 6 screenshots per challenge.
-- Prefer the minimum number of screenshots that still proves the solve.
-- Screenshots must come from the user's own system.
-- The final DOCX should be easy to copy by hand.
-- Support Web, Pwn, Crypto, Forensics, Reverse, OSINT, and Misc.
+## Priority
+
+Human authorship comes first. Screenshots and category-specific evidence are secondary. Formatting is not a goal.
+
+- Preserve the participant's own wording and natural order wherever possible.
+- Keep it casual and direct if that is how the participant speaks.
+- Explain only when the participant's account needs a missing link to make the action understandable.
+- Do not turn short observations into polished cybersecurity prose.
+- Do not add filler, generic explanations, or textbook theory.
+- Do not force a particular length. Include only what is needed to explain the actual solve.
+- Omit failed attempts by default, as requested.
+- Include the exact full flag at the end of the reference material.
+- Include 3–6 genuine screenshots per challenge, as required by PinakaCTF.
 
 ## Invocation
 
-Typical user request:
+The participant will normally invoke this skill in the same conversation where the challenge was solved, for example:
 
-> make Pinaka writeup for this solved chat
+`make the Pinaka write-up from this chat`
 
-When invoked in the same conversation that contains the solve, treat the visible conversation as the primary source. Do not ask the user to paste it again.
+Use the conversation already in context. Do not ask the participant to paste it again.
 
-## Hard rules
+## Non-negotiable authorship rules
 
-1. **Solved-only gate.** Do not generate a write-up pack unless a final flag or equivalent successful completion is present.
-2. **User-action gate.** A step may be included only if the conversation shows that the user actually performed it, or the user confirms they performed it.
-3. **No invented prose.** Prefer exact or near-exact wording already written by the user. If a necessary step has no user-authored explanation, ask for one short sentence such as: `what did you do here in your own words?` Do not silently invent a first-person account.
-4. **No fake screenshots.** Never synthesize, recreate, edit, or cosmetically alter screenshots to make them look authentic. Use genuine captures from the user's own system.
-5. **No fake terminal history.** Do not create commands or outputs that did not occur in the solve.
-6. **No detector-evasion behavior.** Do not add deliberate typos, random grammar errors, fake hesitations, handwriting simulation, or other artifacts intended to bypass authorship checks.
-7. **No over-explaining.** The pack should read like quick personal notes, not a tutorial.
-8. **No failed attempts by default.** Keep only the shortest successful path.
-9. **Pinaka screenshot rule.** Select 3-6 screenshots, each tied to a key break in the challenge.
-10. **Full flag.** Put the exact recovered flag at the end.
+1. Include an action only when the participant performed it or confirms they performed it.
+2. Never present an assistant suggestion as something the participant did.
+3. Prefer the participant's exact words. Do not author connective explanations on their behalf.
+4. If an essential part is missing, ask one short, neutral question at a time, such as: `What did you actually do next?`
+5. Do not suggest an answer inside the question.
+6. Do not invent commands, outputs, reasoning, screenshots, tool usage, or flag construction.
+7. Do not add deliberate typos, fake mistakes, artificial hesitations, or other devices intended to disguise AI involvement.
+8. Do not claim the result is human-authored. The participant must write the final competition submission themselves.
 
 ## Workflow
 
-### Phase 0 — Human-authoring gate (always first)
+### First: recover the participant's account
 
-Read `references/human-authoring.md` before doing anything else. The participant's own wording controls the voice. Category rules, screenshot planning, and DOCX formatting are secondary and must never overwrite that voice.
+Read `references/human-authoring.md` before processing the solve. Identify the participant's own observations, actions, commands, and descriptions. Ignore assistant-only suggestions unless the participant later confirms them.
 
-### Phase 1 — Extract the successful path
+Do not convert the conversation into a checklist or numbered solve path. Understand the real sequence internally, then preserve the participant's natural telling of it.
 
-Read the solved conversation from the first useful observation to the flag.
+If the conversation already explains the solve clearly, do not ask unnecessary questions. If an essential action is unclear, ask one concise, non-leading question and wait.
 
-Build an internal table with:
+### Then: choose the evidence
 
-- `step`
-- `user_action`
-- `tool_or_command`
-- `observed_result`
-- `user_wording_available` = yes/no
-- `screenshot_value` = low/medium/high
-- `verified` = yes/no
+Read `references/screenshot-selection.md` and the relevant category notes in `references/category-evidence.md`. These references are only for deciding which evidence matters. They must never dictate the prose or impose a structure.
 
-Ignore assistant suggestions that the user never executed.
+Choose 3–6 screenshots that show the decisive parts of the solve. Place each screenshot immediately after the participant's words that it supports. Do not create a numbered screenshot list, captions, a screenshot gallery, or a separate evidence section.
 
-Then reduce the timeline to the smallest successful chain. Usually 3-7 steps.
+Use genuine screenshots from the participant's own machine. If the current environment has authorized access to the relevant browser, terminal, or application, capture the actual screen state. Reproduce only steps that the participant really performed. If capture is not possible, ask for the real screenshot or leave a plain, temporary note at the exact insertion point, such as `(screenshot needed: /robots.txt with the hidden path visible)`. Never pretend a placeholder is a screenshot.
 
-### Phase 2 — Verify missing ownership
+### Then: prepare the material
 
-If any required step is assistant-only or ambiguous, ask one compact question. Example:
+If a DOCX is requested, create a plain Word document containing only:
+- the participant's own text, in the participant's natural order;
+- genuine screenshots placed where they belong;
+- a plain screenshot reminder at the relevant point only when the image is not yet available;
+- the exact full flag as the final text.
 
-> I can verify `/robots.txt` and the CyberChef decode, but I can't verify that you opened `/backup.zip` yourself. Did you actually do that? If yes, give me one short line in your words.
+Do not add a title page, metadata table, headings, labels, numbered steps, bullets, decorative styling, borders, screenshot captions, headers, footers, or a forced conclusion. Use normal Word defaults. Do not rewrite the participant's words to fill space.
 
-Do not interrogate the user about already verified steps.
-
-### Phase 3 — Select screenshots
-
-Read `references/screenshot-selection.md` and the matching section in `references/category-evidence.md`.
-
-Pick 3-6 screenshots that prove the actual breakpoints, not every minor command.
-
-A screenshot is useful when it shows one of:
-
-- the hidden clue/endpoint/file;
-- the exploit or decisive command;
-- the decoder/decompiler/filter/output that changes the direction of the solve;
-- the shell/secret/location/key obtained;
-- the final flag.
-
-Prefer a short visual chain. Example for Web:
-
-1. `/robots.txt` revealing the hidden path.
-2. Hidden resource or response containing the encoded string.
-3. CyberChef recipe/output decoding it.
-4. Final flag page/output.
-
-If genuine screenshots already exist in the conversation or working directory, use them. If the challenge is still accessible and the current environment can capture screenshots, reproduce only the exact verified steps and capture them. If direct capture is unavailable, emit a screenshot checklist with exact screen state to capture; never substitute a fabricated image.
-
-### Phase 4 — Compose handwriting notes
-
-The prose must be minimal.
-
-Preferred pattern:
-
-- `Checked /robots.txt and found /secret.`
-- `Opened it, got this encoded string.`
-- `Put it in CyberChef -> Base64 decode.`
-- `That gave the flag.`
-
-Use the user's own wording whenever possible. Preserve natural shorthand already used by the user. Do not deliberately introduce mistakes.
-
-Do not write paragraphs unless a category genuinely needs one to explain the exploit.
-
-### Phase 5 — Produce the pack
-
-Create a challenge folder:
-
-```text
-<Challenge_Name>/
-  notes.json
-  screenshots/
-    01_<meaningful_name>.png
-    02_<meaningful_name>.png
-    ...
-  <Challenge_Name>_handwriting_sheet.docx
-```
-
-Use a small JSON manifest matching `assets/manifest-example.json`.
+Use the ordered `content` array in `assets/manifest-example.json` as an internal assembly format only. It is not a write-up template.
 
 Generate the DOCX with:
 
 ```bash
-python scripts/build_reference_docx.py manifest.json <Challenge_Name>_handwriting_sheet.docx
+python scripts/build_reference_docx.py manifest.json <Challenge_Name>_notes.docx
 ```
 
-The DOCX is a reference sheet for the participant to handwrite. It should contain:
+### Final check
 
-- challenge name;
-- category and points if known;
-- 3-7 short user-authored/verified steps;
-- command snippets only when important;
-- screenshot placed directly after the step it proves;
-- full flag at the end.
+Check that:
+- every described action is participant-performed or participant-confirmed;
+- the wording remains the participant's own;
+- no assistant-only suggestion has slipped into the account;
+- failed attempts are omitted unless requested;
+- there are 3–6 genuine screenshot images or clearly marked screenshot reminders awaiting replacement;
+- screenshots appear beside the relevant part of the account;
+- the full flag is exact and last;
+- the document has no imposed write-up template.
 
-Do not add introduction, conclusion, TL;DR, lessons learned, vulnerability theory, or remediation unless the user asks.
+## Category handling
 
-### Phase 6 — Final audit
+Supported categories: Web, Pwn, Crypto, Forensics, Reverse, OSINT, and Misc. Use category-specific knowledge only to identify decisive evidence. Never make the prose sound like a category-specific template.
 
-Before returning the pack, check:
+## Completion message
 
-- solved flag exactly matches the conversation;
-- no assistant-only step is presented as a user action;
-- no failed attempt remains unless requested;
-- 3-6 screenshots are selected;
-- every screenshot is genuine and from the user's system;
-- screenshot order matches the successful path;
-- no screenshot contains unrelated private information when avoidable;
-- notes are short enough to handwrite without pointless filler;
-- Word file opens and images are readable.
-
-## Output style
-
-When reporting completion, keep it terse:
-
-> Done. I kept the successful path only, used 4 screenshots, and put the full flag at the end. The DOCX is a handwriting reference sheet; copy it into your handwritten submission in your own words.
+Keep the completion message short. State what evidence was included and whether any screenshot reminders still need real captures. Do not claim that the Word reference is a compliant final submission.
