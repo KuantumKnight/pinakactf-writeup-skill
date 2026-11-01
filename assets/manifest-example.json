@@ -1,0 +1,30 @@
+{
+  "ctf": "PinakaCTF 2026",
+  "challenge": "Example Challenge",
+  "category": "Web",
+  "points": "100",
+  "flag": "PINAKA{example_flag}",
+  "steps": [
+    {
+      "text": "I checked robots.txt and found this encoded string.",
+      "source": "user",
+      "command": "",
+      "screenshot": "",
+      "screenshot_target": "Browser showing /robots.txt with the encoded string visible"
+    },
+    {
+      "text": "Used CyberChef From Base64 and got the flag.",
+      "source": "user",
+      "command": "",
+      "screenshot": "",
+      "screenshot_target": "CyberChef showing the input, From Base64 recipe, and decoded output"
+    },
+    {
+      "text": "",
+      "source": "evidence",
+      "command": "",
+      "screenshot": "",
+      "screenshot_target": "Final challenge page or terminal showing the accepted/full flag"
+    }
+  ]
+}
