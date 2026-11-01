@@ -1,73 +1,23 @@
-# Screenshot selection
+# Screenshot evidence
 
-PinakaCTF requires 3–6 screenshots per challenge.
+PinakaCTF requires 3–6 screenshots for each challenge. Select the smallest number that clearly proves the important parts of the actual solve.
 
-## Objective
+There is no screenshot section or fixed screenshot layout. Put each genuine screenshot directly after the participant's own words that it supports. Do not number screenshots, add captions, draw boxes around them, or collect them in a separate gallery unless the participant specifically asks.
 
-Choose screenshots that prove the successful path with the fewest images.
+A useful screenshot may show:
+- the original clue or hidden endpoint;
+- the important value, file, request, or response discovered;
+- the decisive command, exploit, decoder, decompiler, or analysis output;
+- the result that proves the solve;
+- the final flag or accepted submission state.
 
-A screenshot should answer at least one of these:
-- Where was the clue found?
-- What decisive value/artifact was discovered?
-- What command/tool transformed or exploited it?
-- What output proved success?
-- Where is the final flag visible?
+For a short challenge, three screenshots are usually enough. Use four, five, or six only when the solve has distinct evidence stages that need to be shown.
 
-## Default count
+Capture genuine screen states from the participant's own system. If the current environment can access the participant's actual browser, terminal, or application with permission, capture the relevant screen directly. Do not fabricate a terminal, browser page, tool result, or flag. Do not use another participant's screenshots or online screenshots.
 
-Prefer 3 screenshots for a short challenge, 4 for a normal challenge, and 5–6 only when distinct stages genuinely need evidence.
+If a screenshot is not available, place a plain temporary reminder exactly where it belongs, for example:
+`(screenshot needed: browser showing /robots.txt and the hidden path)`
 
-## Ordering
+Replace every reminder with a genuine screenshot before the participant submits. Cropping a genuine image for readability is acceptable when it does not change the evidence.
 
-Put screenshots immediately after the participant-authored sentence they support.
-
-## Screenshot target syntax
-
-When direct capture is unavailable:
-
-`[SS1 — browser showing /robots.txt with the encoded string visible]`
-
-Keep targets specific enough that the participant can reproduce the screenshot on their own machine.
-
-## Genuine-evidence rule
-
-Never:
-- fabricate a terminal window,
-- regenerate a fake challenge page,
-- alter a screenshot to add a flag or command,
-- use another participant's screenshot,
-- claim a screenshot was captured when only a placeholder exists.
-
-Cropping a genuine participant screenshot for legibility is acceptable only if it does not change its contents.
-
-## Typical minimal chains
-
-### Web
-1. decisive endpoint/page
-2. discovered token/string/request change
-3. decoder/exploit/result showing flag
-
-### Crypto
-1. ciphertext/challenge artifact
-2. decisive transform/tool/script
-3. decoded plaintext/flag
-
-### Pwn
-1. binary/service interaction or protection info
-2. exploit execution
-3. shell/flag output
-
-### Reverse
-1. decisive decompiler/disassembly/strings view
-2. recovered logic/key or solve script
-3. successful output/flag
-
-### Forensics
-1. source artifact/file finding
-2. extraction/analysis result
-3. recovered flag
-
-### OSINT
-1. original clue
-2. decisive external evidence/location match
-3. final answer/flag submission evidence
+Category-specific screenshot ideas are in `category-evidence.md`. They are selection hints only; they do not impose a narrative or document format.
