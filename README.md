@@ -1,75 +1,53 @@
 # pinakactf-writeup-skill
 
-A small Claude Code / Codex skill for turning an **already solved** PinakaCTF 2026 conversation into a compact handwriting/evidence reference pack.
+A Claude Code / Codex helper for PinakaCTF 2026 write-up preparation, designed around the participant's own account of an already-solved challenge.
 
-It is intentionally optimized for lazy, short write-ups: successful path only, 3-6 useful screenshots, almost no theory, and the full flag at the end.
+**No template. No fixed write-up format.** It does not force headings, sections, numbered steps, bullet lists, tables, a TL;DR, introduction, conclusion, or a standard narrative pattern. The participant's own wording and natural flow decide how the account reads.
 
-## Important
-
-PinakaCTF's supplied rules require the final write-up to be handwritten and in the participant's own words. This repository does not try to bypass that rule. It organizes verified solve evidence and produces a DOCX reference sheet that you can use while writing the final submission by hand.
+PinakaCTF requires handwritten write-ups in the participant's own words and prohibits AI-written submissions. This skill helps recover the participant's own actions and organize genuine screenshots. Any DOCX it creates is a plain reference copy, not a substitute for the participant's handwritten submission.
 
 ## What it does
 
-- reads the already-solved chat in context;
-- strips assistant suggestions that were never executed;
-- keeps the shortest successful path;
-- keeps failed attempts out by default;
-- selects 3-6 meaningful screenshots;
-- supports Web, Crypto, Forensics, Reverse, Pwn, OSINT, and Misc;
-- includes the exact full flag;
-- builds a clean Word reference sheet.
+- works in the same conversation where the challenge was solved;
+- keeps the participant's own wording instead of generating a polished narrative;
+- asks only for missing facts, using short neutral questions;
+- ignores assistant suggestions that were never actually performed;
+- omits failed attempts by default;
+- places 3–6 genuine screenshots directly beside the relevant account;
+- uses category knowledge only to select useful evidence;
+- includes the exact full flag at the end;
+- can create a plain DOCX with no imposed layout.
 
-## Typical use
+## Use
 
-In the same conversation where the challenge was solved:
-
-```text
-make Pinaka writeup for this
-```
-
-The agent follows `SKILL.md`, verifies the successful path, gathers or requests genuine screenshots, creates a small JSON manifest, then runs:
-
-```bash
-python scripts/build_reference_docx.py manifest.json Challenge_Name_handwriting_sheet.docx
-```
-
-## Minimal style
-
-The intended note style is short and factual:
+In the solved conversation, ask:
 
 ```text
-Checked /robots.txt and found /secret.
-Opened it, got an encoded string.
-Put it in CyberChef -> Base64 decode.
-That gave the flag.
+make the Pinaka write-up from this chat
 ```
 
-Use the participant's own wording from the solve conversation whenever available.
+The skill reads the conversation already in context. It does not ask you to paste it again.
 
-## Repo layout
-
-```text
-SKILL.md
-CLAUDE.md
-AGENTS.md
-references/
-  human-authoring.md
-  category-evidence.md
-  screenshot-selection.md
-scripts/
-  build_reference_docx.py
-assets/
-  manifest-example.json
-examples/
-  example-manifest.json
-```
-
-## Requirements
+If a Word reference is needed, the agent builds an ordered content manifest and runs:
 
 ```bash
 pip install python-docx
+python scripts/build_reference_docx.py manifest.json Challenge_Name_notes.docx
 ```
 
-## License
+The manifest is an internal way to place the participant's text and screenshots in order. It is not a required write-up format.
 
-MIT
+## Files
+
+- `SKILL.md` — main skill
+- `CLAUDE.md` — Claude Code instructions
+- `AGENTS.md` — Codex instructions
+- `references/human-authoring.md` — primary authorship rules
+- `references/screenshot-selection.md` — genuine screenshot handling
+- `references/category-evidence.md` — category-specific evidence hints
+- `scripts/build_reference_docx.py` — plain DOCX assembler
+- `assets/manifest-example.json` — internal assembly example
+
+## Important
+
+Do not use this skill to disguise AI authorship, fabricate a solve, invent screenshots, or bypass the event's rules. The participant must handwrite the actual submission in their own words.
